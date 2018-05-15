@@ -38,15 +38,16 @@ public class SchemaParse {
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         String a, b, c;
         JSONObject[] lev1 = new JSONObject[10];
-        lev1[0] = new JSONObject();
-        lev1[2] = null;
-        lev1[3] = new JSONObject();
-        lev1[4] = new JSONObject();
+//        lev1[0] = new JSONObject();
+//        lev1[2] = null;
+//        lev1[3] = new JSONObject();
+//        lev1[4] = new JSONObject();
         ArrayList<String>[] listArray = new ArrayList[10];
         listArray[0] = new ArrayList<String>();
         listArray[1] = new ArrayList<String>();
         listArray[2] = new ArrayList<String>();
         listArray[3] = new ArrayList<String>();
+        listArray[4] = new ArrayList<String>();
         JSONObject[] lev2 = new JSONObject[10];
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema1.json")); //the location of the file
@@ -54,8 +55,7 @@ public class SchemaParse {
         //deklarasi objek root terluar yang diketahui
                
        
-        System.out.println("- level 0: ");
-        System.out.println("-------------------------------------------");
+        
         //membuat iterator mengulang sesuai data yang ada
         JSONObject properties = (JSONObject) jsonObject.get("properties"); 
         Iterator<?> propertiesPointer = properties.keySet().iterator();
@@ -70,8 +70,13 @@ public class SchemaParse {
            //System.out.println(a+": "+properties.get(a));
             
         }
+        if(!listArray[0].isEmpty()){
+            System.out.println("- level 0: ");
+            System.out.println("-------------------------------------------");
+            System.out.println(listArray[0].toString());
+            
+        }
         
-        System.out.println(listArray[0].toString());
         //System.out.println(level0.toString());
 //        for (int i = 0; i < 6; i++) {
 //            //System.out.println(level0.toString());
@@ -91,8 +96,7 @@ public class SchemaParse {
 //        }
         
         System.out.println("");
-        System.out.println("- level 1: ");
-        System.out.println("-------------------------------------------");
+      
 //        JSONObject dimention = (JSONObject) properties.get(level0.get(4));
 //        Iterator<?> dimentionPointer = dimention.keySet().iterator();
         for (int i = 0; i < listArray[0].size(); i++) {
@@ -111,14 +115,16 @@ public class SchemaParse {
            // System.out.println("");
         }
         System.out.println("");
-        System.out.println(listArray[1]);
-        System.out.println(listArray[1].size());
+        if (!listArray[1].isEmpty()) {
+            System.out.println("- level 1: ");
+            System.out.println("-------------------------------------------");
+            System.out.println(listArray[1].toString());
+        }
         
         System.out.println("");
         //System.out.println(lev1[1].toString());   
 
-        System.out.println("level 2");
-        System.out.println("-------------------------------------------");
+        
         
         for (int i = 0; i < listArray[1].size(); i++) {
             
@@ -151,11 +157,12 @@ public class SchemaParse {
                 
             }             
         }
-        System.out.println(listArray[2]);
+        if (!listArray[2].isEmpty()) {
+            System.out.println("- level 2: ");
+            System.out.println("-------------------------------------------");
+            System.out.println(listArray[2].toString());
+        }
         System.out.println("");
-        
-        System.out.println("level 3");
-        System.out.println("-------------------------------------------");
 
         for (int i = 0; i < listArray[2].size(); i++) {
 
@@ -191,8 +198,88 @@ public class SchemaParse {
 
             }
         }
-        System.out.println(listArray[3]);
+        if (!listArray[3].isEmpty()) {
+            System.out.println("- level 3: ");
+            System.out.println("-------------------------------------------");
+            System.out.println(listArray[3].toString());
+        }
+        System.out.println("");
         
+        //untuk cek panjang array list level sebelumnya
+        for (int i = 0; i < listArray[3].size(); i++) {
+            if(listArray[3].get(i).equalsIgnoreCase("break")){
+                //System.out.println("i= "+i);
+                for (int j = i-1; j >= 0; j--) {
+                    if(listArray[3].get(j).equalsIgnoreCase("break")){
+                        break;
+                    }else{
+                        if(j==i-1 || j==i-2 || j==i-3){
+                           // System.out.println(j);
+                        }else{
+                            //System.out.println(j);
+                            try {
+                                if ((JSONObject) lev1[3].get(listArray[3].get(j)) != null) {
+//                                    System.out.println("y");
+//                                    System.out.print(i + "= ");
+                                    //System.out.println(listArray[3].get(j));
+                                    lev1[4] = (JSONObject) lev1[3].get(listArray[3].get(j));
+                                    Iterator<?> dimentionPointer1 = lev1[4].keySet().iterator();
+                                    while (dimentionPointer1.hasNext()) {
+                                        a = (String) dimentionPointer1.next();
+                                        listArray[4].add(a);
+                                    }
+                                    for (int k = j; k < listArray[3].size(); k++) {
+                                        if ((listArray[3].get(k).equalsIgnoreCase("break"))) {
+                                            for (int x = 1; x < 4; x++) {
+                                                listArray[4].add(listArray[3].get(k - 4 + x));
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    listArray[4].add(listArray[3].get(j));
+                                    listArray[4].add("break");
+                                }
+                            } catch (Exception e) {
+
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+//            try {
+//                if ((JSONObject) lev1[3].get(listArray[3].get(i)) != null) {
+//                    System.out.println("y");
+//                    System.out.print(i + "= ");
+//                    System.out.println(listArray[3].get(i));
+//                    lev1[4] = (JSONObject) lev1[3].get(listArray[3].get(i));
+//                    Iterator<?> dimentionPointer1 = lev1[4].keySet().iterator();
+//                    while (dimentionPointer1.hasNext()) {
+//                        a = (String) dimentionPointer1.next();
+//                        listArray[4].add(a);
+//                    }
+//                    for (int k = i; k < listArray[3].size(); k++) {
+//                        if ((listArray[3].get(k).equalsIgnoreCase("break"))) {
+//                            for (int j = 1; j < 4; j++) {
+//                                listArray[4].add(listArray[3].get(k - 4 + j));
+//                            }
+//                            break;
+//                        }
+//                    }
+//                    listArray[4].add(listArray[3].get(i));
+//                    listArray[4].add("break");
+//                }
+//            } catch (Exception e) {
+//
+//            }
+        }
+        if (!listArray[4].isEmpty()) {
+            System.out.println("- level 4: ");
+            System.out.println("-------------------------------------------");
+            System.out.println(listArray[4].toString());
+        }
+        System.out.println("");
     }
     
 }
