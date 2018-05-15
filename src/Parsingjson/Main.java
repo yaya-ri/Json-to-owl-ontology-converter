@@ -27,14 +27,13 @@ public class Main {
         Object obj = parser.parse(new FileReader("/home/yaya/skripsi/file.json")); //the location of the file
         JSONObject jsonObject = (JSONObject) obj;
         JSONArray numbers = (JSONArray) jsonObject.get("numbers");
+        //JSONArray natural = (JSONArray) jsonObject.get("narutal");
         
-        //for (int i = 0; i <=2; i++) {
-            for (Object number : numbers) {
-                JSONObject jsonNumber = (JSONObject) number;
-                String natural = (String) number.toString();
-                System.out.println(natural);
-            }
-       // }
+        for (Object number : numbers) {
+            JSONObject jsonNumber = (JSONObject) number;
+            String natural = (String) jsonNumber.get("natural");
+            System.out.println(natural);
+        }
         
     }
 

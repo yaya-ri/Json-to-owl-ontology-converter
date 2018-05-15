@@ -48,6 +48,9 @@ public class SchemaParse {
         listArray[2] = new ArrayList<String>();
         listArray[3] = new ArrayList<String>();
         listArray[4] = new ArrayList<String>();
+        listArray[5] = new ArrayList<String>();
+        listArray[6] = new ArrayList<String>();
+        listArray[7] = new ArrayList<String>();
         JSONObject[] lev2 = new JSONObject[10];
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema1.json")); //the location of the file
@@ -130,7 +133,7 @@ public class SchemaParse {
             
             try{
                 if ((JSONObject) lev1[1].get(listArray[1].get(i)) != null) {
-                    //System.out.println("y");
+                    //System.out.println("y= " +i);
                     //System.out.println(i);
                     lev1[2] = (JSONObject) lev1[1].get(listArray[1].get(i));
                     Iterator<?> dimentionPointer1 = lev1[2].keySet().iterator();
@@ -219,7 +222,7 @@ public class SchemaParse {
                             //System.out.println(j);
                             try {
                                 if ((JSONObject) lev1[3].get(listArray[3].get(j)) != null) {
-//                                    System.out.println("y");
+                                    //System.out.println("y = " + j);
 //                                    System.out.print(i + "= ");
                                     //System.out.println(listArray[3].get(j));
                                     lev1[4] = (JSONObject) lev1[3].get(listArray[3].get(j));
@@ -248,31 +251,6 @@ public class SchemaParse {
                     }
                 }
             }
-//            try {
-//                if ((JSONObject) lev1[3].get(listArray[3].get(i)) != null) {
-//                    System.out.println("y");
-//                    System.out.print(i + "= ");
-//                    System.out.println(listArray[3].get(i));
-//                    lev1[4] = (JSONObject) lev1[3].get(listArray[3].get(i));
-//                    Iterator<?> dimentionPointer1 = lev1[4].keySet().iterator();
-//                    while (dimentionPointer1.hasNext()) {
-//                        a = (String) dimentionPointer1.next();
-//                        listArray[4].add(a);
-//                    }
-//                    for (int k = i; k < listArray[3].size(); k++) {
-//                        if ((listArray[3].get(k).equalsIgnoreCase("break"))) {
-//                            for (int j = 1; j < 4; j++) {
-//                                listArray[4].add(listArray[3].get(k - 4 + j));
-//                            }
-//                            break;
-//                        }
-//                    }
-//                    listArray[4].add(listArray[3].get(i));
-//                    listArray[4].add("break");
-//                }
-//            } catch (Exception e) {
-//
-//            }
         }
         if (!listArray[4].isEmpty()) {
             System.out.println("- level 4: ");
@@ -280,6 +258,57 @@ public class SchemaParse {
             System.out.println(listArray[4].toString());
         }
         System.out.println("");
+        
+        for (int i = 0; i < listArray[4].size(); i++) {
+            if (listArray[4].get(i).equalsIgnoreCase("break")) {
+                //System.out.println("i= "+i);
+                for (int j = i - 1; j >= 0; j--) {
+                    if (listArray[4].get(j).equalsIgnoreCase("break")) {
+                        break;
+                    } else {
+                        if (j == i - 1 || j == i - 2 || j == i - 3 || j == i - 4) {
+                            // System.out.println(j);
+                        } else {
+                            //System.out.println(j);
+                            //System.out.println(lev1[4].get(listArray[4].get(j)));
+                            //break;
+                            try {
+                                if ((JSONObject) lev1[4].get(listArray[4].get(j)) != null) {
+                                    //System.out.println("y");
+//                                    System.out.print(i + "= ");
+                                    //System.out.println(listArray[3].get(j));
+                                    lev1[5] = (JSONObject) lev1[4].get(listArray[4].get(j));
+                                    Iterator<?> dimentionPointer1 = lev1[5].keySet().iterator();
+                                    while (dimentionPointer1.hasNext()) {
+                                        a = (String) dimentionPointer1.next();
+                                        listArray[5].add(a);
+                                    }
+                                    for (int k = j; k < listArray[4].size(); k++) {
+                                        if ((listArray[4].get(k).equalsIgnoreCase("break"))) {
+                                            for (int x = 1; x < 5; x++) {
+                                                listArray[5].add(listArray[4].get(k - 5 + x));
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    listArray[5].add(listArray[4].get(j));
+                                    listArray[5].add("break");
+                                }
+                            } catch (Exception e) {
+
+                            }
+
+                        }
+
+                    }
+                }
+            }
+        }
+        if (!listArray[5].isEmpty()) {
+            System.out.println("- level 5: ");
+            System.out.println("-------------------------------------------");
+            System.out.println(listArray[5].toString());
+        }
     }
     
 }
