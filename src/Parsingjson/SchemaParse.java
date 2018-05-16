@@ -53,7 +53,7 @@ public class SchemaParse {
         listArray[7] = new ArrayList<String>();
         JSONObject[] lev2 = new JSONObject[10];
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema1.json")); //the location of the file
+        Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema.json")); //the location of the file
         JSONObject jsonObject = (JSONObject) obj;
         //deklarasi objek root terluar yang diketahui
                
@@ -267,7 +267,7 @@ public class SchemaParse {
                         break;
                     } else {
                         if (j == i - 1 || j == i - 2 || j == i - 3 || j == i - 4) {
-                            // System.out.println(j);
+                            //System.out.println(j);
                         } else {
                             //System.out.println(j);
                             //System.out.println(lev1[4].get(listArray[4].get(j)));
@@ -309,6 +309,81 @@ public class SchemaParse {
             System.out.println("-------------------------------------------");
             System.out.println(listArray[5].toString());
         }
+        System.out.println("");
+        System.out.println("memasukan data ke list baru");
+        System.out.println("");
+        ArrayList<String>[] listMapping = new ArrayList[10];
+        listMapping[0] = new ArrayList<String>();
+        listMapping[1] = new ArrayList<String>();
+        listMapping[2] = new ArrayList<String>();
+        listMapping[3] = new ArrayList<String>();
+        String[][] relasi = new String[100][2];
+        ArrayList<String> SuperClass = new ArrayList();
+        ArrayList<String> relasiClass = new ArrayList();
+        ArrayList<String> objectProperty = new ArrayList();
+        
+        
+        
+        for (int i = 0; i <=3; i++) {
+            boolean check = false;
+            for (int j = 0; j < listArray[i].size(); j++) {
+                if (listArray[i].get(j).equalsIgnoreCase("type")) {
+                    check = true;
+                }
+                
+            }
+            if (check) {
+                for (int j = 0; j < listArray[i].size(); j++) {
+                    if (listArray[i].get(j).equalsIgnoreCase("break")) {
+                        listMapping[i].add(listArray[i].get(j - 1));
+                    }
+
+                }
+            }
+            //relasiClass.add("break");
+        }
+        
+        System.out.println("list class");
+        for (int i = 0; i < 4; i++) {
+            System.out.println(listMapping[i].toString());
+        }
+        
+        System.out.println("");
+        for (int i = 0; i < listMapping[3].size(); i++) {
+            //for (int j = 0; j <2; j++) {
+                relasi[i][0]= listMapping[1].get(0);
+                relasi[i][1]= listMapping[3].get(i);
+           //}
+        }
+        
+        System.out.println("list relasi class: ");
+        for (int i = 0; i < listMapping[3].size(); i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.print(relasi[i][j] + " - ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+        System.out.println("List object properti");
+        //for (int i = 0; i < listArray[5].size(); i++) {
+            boolean check = false;
+            for (int j = 0; j < listArray[5].size(); j++) {
+                if (listArray[5].get(j).equalsIgnoreCase("type")) {
+                    check = true;
+                }
+
+            }
+            if (check) {
+                for (int j = 0; j < listArray[5].size(); j++) {
+                    if (listArray[5].get(j).equalsIgnoreCase("break")) {
+                        objectProperty.add(listArray[5].get(j - 1));
+                    }
+
+                }
+            }
+            System.out.println(objectProperty.toString());
+            
+        //}
     }
     
 }

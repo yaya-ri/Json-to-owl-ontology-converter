@@ -38,7 +38,7 @@ public class Coba {
         Coba objek = new Coba();
         JSONObject[] saveParsing =  new JSONObject[10];
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema.json")); //the location of the file
+        Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema1.json")); //the location of the file
         JSONObject jsonObject = (JSONObject) obj;
         //deklarasi objek root terluar yang diketahui
         saveParsing[0] = (JSONObject) jsonObject.get("properties");
