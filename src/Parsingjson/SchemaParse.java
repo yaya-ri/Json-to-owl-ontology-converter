@@ -53,7 +53,7 @@ public class SchemaParse {
         listArray[7] = new ArrayList<String>();
         JSONObject[] lev2 = new JSONObject[10];
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader("/home/yaya/skripsi/schema1.json")); //the location of the file
+        Object obj = parser.parse(new FileReader("file/schema1.json")); //the location of the file
         JSONObject jsonObject = (JSONObject) obj;
         //deklarasi objek root terluar yang diketahui
                
